@@ -6,10 +6,10 @@ interacting with the world and each other.
 
 ## Simulation Parameters
 
-Window Size: 900 x 500 
-Target FPS: 60 
-Fixed Time Step: 1 / 60 seconds 
-Integration Method: Semi-Implicit Euler 
+- Window Size: 900 x 500 
+- Target FPS: 60 
+- Fixed Time Step: 1 / 60 seconds 
+- Integration Method: Semi-Implicit Euler 
 
 ## Inital Assumptions
 
