@@ -22,7 +22,7 @@ void initializeParticles(Particle *ptr_p)
 	{
 		Particle particle;
 		particle.position = (Vector2) {WINDOW_WIDTH/2 + idx * 50, WINDOW_HEIGHT/2 + idx * 50};
-		particle.velocity = (Vector2) {5.0f, 5.0f};
+		particle.velocity = (Vector2) {15.0f, 5.0f};
 		particle.acceleration = (Vector2) {0.0f, GRAVITY};
 		particle.radius = 5.0f;
 
