@@ -15,22 +15,22 @@ ElementaryRule : a lookup table system that assigns a neighborhood configuration
 
 from enum import Enum
 
-class NeighConfig(Enum):
-    """
-    Constants that represents all eight possible neigborhood configurations of
-    an elementary cellular automaton system (2 states, size 3 neighborhood) as
-    listed below:
+# class NeighConfig(Enum):
+#     """
+#     Constants that represents all eight possible neigborhood configurations of
+#     an elementary cellular automaton system (2 states, size 3 neighborhood) as
+#     listed below:
 
-    111 | 110 | 101 | 100 | 011 | 010 | 001 | 000
-    """
-    ALL_ACTIVE = [1, 1, 1]
-    LEFT_CENTER_ACTIVE = [1, 1, 0]
-    LEFT_RIGHT_ACTIVE = [1, 0, 1]
-    LEFT_ACTIVE = [1, 0, 0]
-    CENTER_RIGHT_ACTIVE = [0, 1, 1]
-    CENTER_ACTIVE = [0, 1, 0]
-    RIGHT_ACTIVE = [0, 0, 1]
-    NONE_ACTIVE = [0, 0, 0]
+#     111 | 110 | 101 | 100 | 011 | 010 | 001 | 000
+#     """
+#     ALL_ACTIVE = [1, 1, 1]
+#     LEFT_CENTER_ACTIVE = [1, 1, 0]
+#     LEFT_RIGHT_ACTIVE = [1, 0, 1]
+#     LEFT_ACTIVE = [1, 0, 0]
+#     CENTER_RIGHT_ACTIVE = [0, 1, 1]
+#     CENTER_ACTIVE = [0, 1, 0]
+#     RIGHT_ACTIVE = [0, 0, 1]
+#     NONE_ACTIVE = [0, 0, 0]
 
 class ElementaryRule:
     """
@@ -52,20 +52,20 @@ class ElementaryRule:
         Clears all values within the lookup table. 
     """
 
-    def __init__(self, rule : list[int]) -> None:
+    def __init__(self, rule: list[int]) -> None:
         if len(rule) != 8: 
             print("ERROR: The rule list must be of length 8.")
             return
     
         self.rule_table = {
-            NeighConfig.ALL_ACTIVE.value : rule[0],
-            NeighConfig.LEFT_CENTER_ACTIVE.value : rule[1],
-            NeighConfig.LEFT_RIGHT_ACTIVE.value : rule[2], 
-            NeighConfig.LEFT_ACTIVE.value : rule[3],
-            NeighConfig.CENTER_RIGHT_ACTIVE.value : rule[4], 
-            NeighConfig.CENTER_ACTIVE.value : rule[5], 
-            NeighConfig.RIGHT_ACTIVE.value : rule[6], 
-            NeighConfig.NONE_ACTIVE.value : rule[7] 
+            (1, 1, 1) : rule[0],
+            (1, 1, 0) : rule[1],
+            (1, 0, 1) : rule[2], 
+            (1, 0, 0) : rule[3],
+            (0, 1, 1) : rule[4], 
+            (0, 1, 0) : rule[5], 
+            (0, 0, 1) : rule[6], 
+            (0, 0, 0) : rule[7] 
         }
     
     def clear_rule_table(self) -> None:
@@ -74,11 +74,8 @@ class ElementaryRule:
             self.rule_table[neigh] = None
     
     def __repr__(self) -> str:
-        rule_chunks = []
-        for neigh in self.rule_table.keys:
-            rule_chunks.append(f"{neigh} |-> {self.rule_table[neigh]} \n")
-        
-        return " ".join(rule_chunks)
+        #TODO: Fix the representation of this object. 
+        pass
     
     def __str__(self):
         self.__repr__

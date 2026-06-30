@@ -10,8 +10,11 @@ Cell: a single unit with a binary state of "alive" or "dead".
 CaHashEngine: a global manager of a collection of Cells that uses elementary 
               celluar automata to hash a password.
 """
-
+# Python Built-In Imports
 import random
+
+# Custom Imports
+from elem_rule_set import ElementaryRule
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
@@ -73,35 +76,46 @@ class CaHashEngine:
     def __init__(self, array_length: int, num_of_gen: int) -> None:
 
         # TODO: Would it be a good design choice to completely limit the client
-        #       from being able to create more than one instance of CaHashEngine?
+        #       from being able to create more than one instance of 
+        #       CaHashEngine?
 
         self.array_length = array_length
         self.num_of_gen = num_of_gen
 
         cell_array = [Cell() for _ in range(self.array_length)]
-        self._cell_matrix = [cell_array if i == 0 else [0] * self.array_length for i in range(self.num_of_gen)]
+        self._cell_matrix = [cell_array if i == 0 else [0] * self.array_length 
+                             for i in range(self.num_of_gen)]
     
-    def _apply_rule_set(self, old_arr: list[Cell]) -> list[Cell]:
+    def _apply_rule_set(self, old_arr: list[Cell], 
+                        rule_tble: dict[list[int], int]) -> list[Cell]:
         new_arr = []
         new_state = 0
         for cell_idx in range(self.array_length):
-            if cell_idx == 0:
-                new_state = CELL_DEAD ^ (old_arr[cell_idx].get_state() | old_arr[cell_idx + 1].get_state())
+            if cell_idx == 0: 
+                new_state = rule_tble[(CELL_DEAD, 
+                                       old_arr[cell_idx].get_state(), 
+                                       old_arr[cell_idx + 1].get_state())]
                 new_arr.append(Cell(new_state))
             elif cell_idx == self.array_length - 1:
-                new_state = old_arr[cell_idx - 1].get_state() ^ (old_arr[cell_idx].get_state() | CELL_DEAD)
+                new_state = rule_tble[(old_arr[cell_idx - 1].get_state(), 
+                                       old_arr[cell_idx].get_state(), 
+                                       CELL_DEAD)]
+                
                 new_arr.append(Cell(new_state))
             else:
-                new_state = old_arr[cell_idx - 1].get_state() ^ (old_arr[cell_idx].get_state() | old_arr[cell_idx + 1].get_state())
+                new_state = rule_tble[(old_arr[cell_idx - 1].get_state(), 
+                                       old_arr[cell_idx].get_state(), 
+                                       old_arr[cell_idx + 1].get_state())]
                 new_arr.append(Cell(new_state))
 
         return new_arr 
     
-    def update(self) -> None:
+    def update(self, rule: ElementaryRule) -> None:
         """Updates the previous array of cells using a ruleset."""
         for gen_idx in range(1, self.num_of_gen):
             self._cell_matrix.pop(gen_idx)
-            new_arr = self._apply_rule_set(self._cell_matrix[gen_idx - 1])
+            new_arr = self._apply_rule_set(self._cell_matrix[gen_idx - 1], 
+                                           rule.rule_table)
             self._cell_matrix.insert(gen_idx, new_arr)
 
     def render(self) -> None:
@@ -120,8 +134,9 @@ class CaHashEngine:
             print("\n")
 
 if __name__ == "__main__":
-    engine = CaHashEngine(100, 100)
-    engine.update()
+    engine = CaHashEngine(50, 50)
+    rule30 = ElementaryRule([0, 0, 0, 1, 1, 1, 1, 0])
+    engine.update(rule30)
     engine.render()
 
     
