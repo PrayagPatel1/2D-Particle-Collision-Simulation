@@ -15,7 +15,7 @@ import random
 import matplotlib.pyplot as plt
 
 # Custom Imports
-from elem_rule_set import ElementaryRule, RULE_30
+from elem_rule_set import ElementaryRule, RULE_30, RULE_90, RULE_110, RULE_150
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
@@ -89,6 +89,12 @@ class CaHashEngine:
         self.rule_set = rule_set
 
         cell_array = [Cell() for _ in range(self.array_length)]
+        # cell_array = []
+        # for idx in range(self.array_length):
+        #     if idx == ((self.array_length - 1) // 2):
+        #         cell_array.append(Cell(CELL_ALIVE))
+        #     cell_array.append(Cell(CELL_DEAD))
+
         self._cell_matrix = [cell_array if i == 0 else [0] * self.array_length 
                              for i in range(self.num_of_gen)]
     
@@ -154,7 +160,7 @@ class CaHashEngine:
         plt.show()
 
 if __name__ == "__main__":
-    engine = CaHashEngine(101, 50, RULE_30)
+    engine = CaHashEngine(101, 50, RULE_150)
     engine.update()
     # engine.render_to_terminal()
     engine.render_matplotlib()
