@@ -10,8 +10,9 @@ Cell: a single unit with a binary state of "alive" or "dead".
 CaHashEngine: a global manager of a collection of Cells that uses elementary 
               celluar automata to hash a password.
 """
-# Python Built-In Imports
+# Python Built-In Imports and thrid-party libraries
 import random
+import matplotlib.pyplot as plt
 
 # Custom Imports
 from elem_rule_set import ElementaryRule
@@ -118,7 +119,7 @@ class CaHashEngine:
                                            rule.rule_table)
             self._cell_matrix.insert(gen_idx, new_arr)
 
-    def render(self) -> None:
+    def render_to_terminal(self) -> None:
         """
         Renders every array of cells which has evolved to the terminal where a 
         "dead cell" is represented by a space character and an "alive" cell is 
@@ -127,16 +128,35 @@ class CaHashEngine:
         for gen_idx in range(self.num_of_gen):
             for cell_idx in range(self.array_length):
                 if self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_ALIVE:
-                    print("\u2588", end="")
-                elif self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_DEAD:
                     print(" ", end="")
+                elif self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_DEAD:
+                    print("\u2588", end="")
 
             print("\n")
+    
+    def render_matplotlib(self) -> None:
+        """
+        Renders every array of cells which has evolved on a matplotlib graph, 
+        where the x-axis represents the space the cellular automata has filled
+        out and the y-axis which represents the time or generations the initial
+        cell of array has gone through. 
+        """
+        # Convert the cell matrix to a 2D array of cell states
+        state_matrix = [[self._cell_matrix[gen_idx][cell_idx].get_state() 
+                         for cell_idx in range(self.array_length)] 
+                         for gen_idx in range(self.num_of_gen)]
+        
+        plt.figure(figsize=(10, 6))
+        plt.imshow(state_matrix, cmap='binary', interpolation='nearest')
+        plt.title(f"Cellular Automata of {self.num_of_gen} Generations")
+        plt.colorbar()
+        plt.show()
 
 if __name__ == "__main__":
-    engine = CaHashEngine(50, 50)
+    engine = CaHashEngine(101, 50)
     rule30 = ElementaryRule([0, 0, 0, 1, 1, 1, 1, 0])
     engine.update(rule30)
-    engine.render()
+    # engine.render_to_terminal()
+    engine.render_matplotlib()
 
     
