@@ -59,7 +59,7 @@ cells, either alive or dead. Below is a gallery of how these images with differe
 </td>
 
 <td align="center">
-<img src="/docs/elementary_cellular_auotmata_img/rule150_with_random_inital_values.png" width="600"><br>
+<img src="/docs/elementary_cellular_auotmata_img/rule150_with_random_inital_values.png " width="600"><br>
 <b>Figure 4.</b> Time-space diagram of Rule 150 with random inital row of cells.
 </td>
 </table>

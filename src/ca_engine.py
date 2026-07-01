@@ -15,7 +15,7 @@ import random
 import matplotlib.pyplot as plt
 
 # Custom Imports
-from elem_rule_set import ElementaryRule, RULE_30, RULE_90, RULE_110, RULE_150
+from elem_rule_set import *
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
@@ -128,41 +128,39 @@ class CaHashEngine:
             new_arr = self._apply_rule_set(self._cell_matrix[gen_idx - 1])
             self._cell_matrix.insert(gen_idx, new_arr)
 
-    def render_to_terminal(self) -> None:
-        """
-        Renders every array of cells which has evolved to the terminal where a 
-        "dead cell" is represented by a space character and an "alive" cell is 
-        represented by a block character.  
-        """
-        for gen_idx in range(self.num_of_gen):
-            for cell_idx in range(self.array_length):
-                if self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_ALIVE:
-                    print(" ", end="")
-                elif self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_DEAD:
-                    print("\u2588", end="")
+    # def render_to_terminal(self) -> None:
+    #     """
+    #     Renders every array of cells which has evolved to the terminal where a 
+    #     "dead cell" is represented by a space character and an "alive" cell is 
+    #     represented by a block character.  
+    #     """
+    #     for gen_idx in range(self.num_of_gen):
+    #         for cell_idx in range(self.array_length):
+    #             if self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_ALIVE:
+    #                 print(" ", end="")
+    #             elif self._cell_matrix[gen_idx][cell_idx].get_state() == CELL_DEAD:
+    #                 print("\u2588", end="")
 
-            print("\n")
+    #         print("\n")
     
-    def render_matplotlib(self) -> None:
-        """
-        Renders every array of cells which has evolved on a matplotlib graph, 
-        where the x-axis represents the space the cellular automata has filled
-        out and the y-axis which represents the time or generations the initial
-        cell of array has gone through. 
-        """
-        # Convert the cell matrix to a 2D array of cell states
-        state_matrix = [[self._cell_matrix[gen_idx][cell_idx].get_state() 
-                         for cell_idx in range(self.array_length)] 
-                         for gen_idx in range(self.num_of_gen)]
+    # def render_matplotlib(self) -> None:
+    #     """
+    #     Renders every array of cells which has evolved on a matplotlib graph, 
+    #     where the x-axis represents the space the cellular automata has filled
+    #     out and the y-axis which represents the time or generations the initial
+    #     cell of array has gone through. 
+    #     """
+    #     # Convert the cell matrix to a 2D array of cell states
+    #     state_matrix = [[self._cell_matrix[gen_idx][cell_idx].get_state() 
+    #                      for cell_idx in range(self.array_length)] 
+    #                      for gen_idx in range(self.num_of_gen)]
         
-        plt.figure(figsize=(10, 6))
-        plt.imshow(state_matrix, cmap='binary', interpolation='nearest')
-        plt.show()
+    #     plt.figure(figsize=(10, 6))
+    #     plt.imshow(state_matrix, cmap='binary', interpolation='nearest')
+    #     plt.show()
 
-if __name__ == "__main__":
-    engine = CaHashEngine(101, 50, RULE_150)
-    engine.update()
-    # engine.render_to_terminal()
-    engine.render_matplotlib()
+    def get_cell_matrix(self) -> list[list[Cell]]:
+        """Returns the cell matrix."""
+        return self._cell_matrix
 
     
