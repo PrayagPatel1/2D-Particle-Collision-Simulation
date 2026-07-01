@@ -13,25 +13,6 @@ ElementaryRule : a lookup table system that assigns a neighborhood configuration
                  0 for the new Cell object to be "dead". 
 """
 
-# from enum import Enum
-
-# class NeighConfig(Enum):
-#     """
-#     Constants that represents all eight possible neigborhood configurations of
-#     an elementary cellular automaton system (2 states, size 3 neighborhood) as
-#     listed below:
-
-#     111 | 110 | 101 | 100 | 011 | 010 | 001 | 000
-#     """
-#     ALL_ACTIVE = [1, 1, 1]
-#     LEFT_CENTER_ACTIVE = [1, 1, 0]
-#     LEFT_RIGHT_ACTIVE = [1, 0, 1]
-#     LEFT_ACTIVE = [1, 0, 0]
-#     CENTER_RIGHT_ACTIVE = [0, 1, 1]
-#     CENTER_ACTIVE = [0, 1, 0]
-#     RIGHT_ACTIVE = [0, 0, 1]
-#     NONE_ACTIVE = [0, 0, 0]
-
 class ElementaryRule:
     """
     A lookup table that takes in three parameters: [left, center, right] which 

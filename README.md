@@ -8,6 +8,53 @@ task for me to challenge my own thinking and understanding on celluar automata a
 This project uses Python 3.14.4 as the primary programing language and uses matplotlib for statistical output
 and visualizing the image created using different rule sets.
 
+# Build / Installation Instructions
+
+## Prerequisites
+
+1. Python 3.14.4
+2. pip 26.0.1
+3. git 2.49.0.windows.1
+
+First, clone the repository and change directories:
+
+```bash
+git clone https://github.com/PrayagPatel1/Ca-Password-Research.git
+cd Ca-Password-Research
+```
+
+Then you want to create a virtual environment by entering the following in your
+terminal:
+
+```bash
+python -m venv myenv
+```
+
+Activating the virtual environment depends on what your operating system is. For
+Windows its going to be the following,
+
+```bash
+myenv\scripts\activate
+```
+
+For Linux/macOs its going to be
+
+```bash
+source myenv/bin/activate
+```
+
+To install all dependcies used by this project, simply enter the following,
+
+```bash
+pip isntall -r requirements.txt
+```
+
+To run the project do,
+
+```bash
+python main.py
+```
+
 # Elementary Cellular Automaton
 
 The first hase of this project was to implement a simple elementary CA simulator with some preloaded Wolfram rule sets like
@@ -71,4 +118,5 @@ done not using any AI tools / chatbot / agent / LLM.
 
 # References
 
-I will add some references along the way for anybody to learn more about celluar automata and cryptography.
+1. The Nature of Code: Simulating Natural Systems with JavaScript by Daniel Shiffman [https://natureofcode.com/]
+2. Elementary cellular automaton by Wikipedia [https://en.wikipedia.org/wiki/Elementary_cellular_automaton#Rule_150]
