@@ -15,7 +15,7 @@ import random
 import matplotlib.pyplot as plt
 
 # Custom Imports
-from elem_rule_set import ElementaryRule
+from elem_rule_set import ElementaryRule, RULE_30
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
@@ -63,6 +63,9 @@ class CaHashEngine:
         The length of an array of Cell objects.
     num_of_gen : int
         Number of total times for the inital array of cells to evolve.
+    rule_set : ElementaryRule
+        Represents the rule set that is going to be used to simulate the 
+        elementary cellular automata.
 
     Methods
     -------
@@ -74,7 +77,8 @@ class CaHashEngine:
         cells. 
     """
 
-    def __init__(self, array_length: int, num_of_gen: int) -> None:
+    def __init__(self, array_length: int, num_of_gen: int, 
+                 rule_set: ElementaryRule) -> None:
 
         # TODO: Would it be a good design choice to completely limit the client
         #       from being able to create more than one instance of 
@@ -82,41 +86,40 @@ class CaHashEngine:
 
         self.array_length = array_length
         self.num_of_gen = num_of_gen
+        self.rule_set = rule_set
 
         cell_array = [Cell() for _ in range(self.array_length)]
         self._cell_matrix = [cell_array if i == 0 else [0] * self.array_length 
                              for i in range(self.num_of_gen)]
     
-    def _apply_rule_set(self, old_arr: list[Cell], 
-                        rule_tble: dict[list[int], int]) -> list[Cell]:
+    def _apply_rule_set(self, old_arr: list[Cell]) -> list[Cell]:
         new_arr = []
         new_state = 0
         for cell_idx in range(self.array_length):
             if cell_idx == 0: 
-                new_state = rule_tble[(CELL_DEAD, 
+                new_state = self.rule_set.rule_tble[(CELL_DEAD, 
                                        old_arr[cell_idx].get_state(), 
                                        old_arr[cell_idx + 1].get_state())]
                 new_arr.append(Cell(new_state))
             elif cell_idx == self.array_length - 1:
-                new_state = rule_tble[(old_arr[cell_idx - 1].get_state(), 
+                new_state = self.rule_set.rule_tble[(old_arr[cell_idx - 1].get_state(), 
                                        old_arr[cell_idx].get_state(), 
                                        CELL_DEAD)]
                 
                 new_arr.append(Cell(new_state))
             else:
-                new_state = rule_tble[(old_arr[cell_idx - 1].get_state(), 
+                new_state = self.rule_set.rule_tble[(old_arr[cell_idx - 1].get_state(), 
                                        old_arr[cell_idx].get_state(), 
                                        old_arr[cell_idx + 1].get_state())]
                 new_arr.append(Cell(new_state))
 
         return new_arr 
     
-    def update(self, rule: ElementaryRule) -> None:
+    def update(self) -> None:
         """Updates the previous array of cells using a ruleset."""
         for gen_idx in range(1, self.num_of_gen):
             self._cell_matrix.pop(gen_idx)
-            new_arr = self._apply_rule_set(self._cell_matrix[gen_idx - 1], 
-                                           rule.rule_table)
+            new_arr = self._apply_rule_set(self._cell_matrix[gen_idx - 1])
             self._cell_matrix.insert(gen_idx, new_arr)
 
     def render_to_terminal(self) -> None:
@@ -148,14 +151,11 @@ class CaHashEngine:
         
         plt.figure(figsize=(10, 6))
         plt.imshow(state_matrix, cmap='binary', interpolation='nearest')
-        plt.title(f"Cellular Automata of {self.num_of_gen} Generations")
-        plt.colorbar()
         plt.show()
 
 if __name__ == "__main__":
-    engine = CaHashEngine(101, 50)
-    rule30 = ElementaryRule([0, 0, 0, 1, 1, 1, 1, 0])
-    engine.update(rule30)
+    engine = CaHashEngine(101, 50, RULE_30)
+    engine.update()
     # engine.render_to_terminal()
     engine.render_matplotlib()
 

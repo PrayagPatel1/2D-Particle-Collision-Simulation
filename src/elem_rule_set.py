@@ -13,7 +13,7 @@ ElementaryRule : a lookup table system that assigns a neighborhood configuration
                  0 for the new Cell object to be "dead". 
 """
 
-from enum import Enum
+# from enum import Enum
 
 # class NeighConfig(Enum):
 #     """
@@ -57,7 +57,7 @@ class ElementaryRule:
             print("ERROR: The rule list must be of length 8.")
             return
     
-        self.rule_table = {
+        self.rule_tble = {
             (1, 1, 1) : rule[0],
             (1, 1, 0) : rule[1],
             (1, 0, 1) : rule[2], 
@@ -79,4 +79,11 @@ class ElementaryRule:
     
     def __str__(self):
         self.__repr__
+
+# Pre-defined Elementary Rule Sets 
+
+RULE_30 = ElementaryRule([0, 0, 0, 1, 1, 1, 1, 0])
+RULE_90 = ElementaryRule([0, 1, 0, 1, 1, 0, 1, 0])
+RULE_110 = ElementaryRule([0, 1, 1, 0, 1, 1, 1, 0])
+RULE_150 = ElementaryRule([1, 0, 0, 1, 0, 1, 1, 0])
 
