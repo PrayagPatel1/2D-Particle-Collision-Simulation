@@ -12,13 +12,25 @@ CaHashEngine: a global manager of a collection of Cells that uses elementary
 """
 # Python Built-In Imports and thrid-party libraries
 import random
-import matplotlib.pyplot as plt
 
 # Custom Imports
 from elem_rule_set import *
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
+
+def init_cell_arr_random(array_length: int) -> list[Cell]:
+    cell_array = [Cell() for _ in range(array_length)]
+    return cell_array
+
+def init_cell_array_one_alive(array_length: int) -> list[Cell]:
+        cell_array = []
+        for idx in range(array_length):
+            if idx == ((array_length - 1) // 2):
+                cell_array.append(Cell(CELL_ALIVE))
+            cell_array.append(Cell(CELL_DEAD))
+        return cell_array
+    
 
 class Cell:
     """
@@ -47,7 +59,7 @@ class Cell:
         return self._state
 
     def __repr__(self) -> str:
-        return f"Cell(state={self._state}, neighbors={self._neighbors}, pos={self._pos})"
+        return f"Cell(state={self._state})"
     
     def __str__(self):
         self.__repr__
@@ -77,25 +89,15 @@ class CaHashEngine:
         cells. 
     """
 
-    def __init__(self, array_length: int, num_of_gen: int, 
-                 rule_set: ElementaryRule) -> None:
+    def __init__(self, engine_param: tuple[int, list[Cell], int, ElementaryRule]) -> None:
 
         # TODO: Would it be a good design choice to completely limit the client
         #       from being able to create more than one instance of 
         #       CaHashEngine?
 
-        self.array_length = array_length
-        self.num_of_gen = num_of_gen
-        self.rule_set = rule_set
+        self.array_length, init_cell_arr, self.num_of_gen, self.rule_set = engine_param 
 
-        cell_array = [Cell() for _ in range(self.array_length)]
-        # cell_array = []
-        # for idx in range(self.array_length):
-        #     if idx == ((self.array_length - 1) // 2):
-        #         cell_array.append(Cell(CELL_ALIVE))
-        #     cell_array.append(Cell(CELL_DEAD))
-
-        self._cell_matrix = [cell_array if i == 0 else [0] * self.array_length 
+        self._cell_matrix = [init_cell_arr if i == 0 else [0] * self.array_length 
                              for i in range(self.num_of_gen)]
     
     def _apply_rule_set(self, old_arr: list[Cell]) -> list[Cell]:

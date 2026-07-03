@@ -1,5 +1,9 @@
 # Celluar Automata Research
 
+[!Warning]
+
+> This isn't a professional research project. I was just curious about using CA for password hashing and led me to code my version from my understadning on the topic through notes and reading about the topic manner. This shouldn't be used as a source for organization or post-secondary research purposes.
+
 Can celluar automata produce cryptographic like properties similar to hash functions? That is the main question
 that this repository will try to answer. Note that this is just an experiment on this idea that I was thinking
 about and is not meant to be research for a organization or post-secondary instituion. This is a personal
@@ -91,23 +95,23 @@ cells, either alive or dead. Below is a gallery of how these images with differe
 <tr>
 <td align="center">
 <img src="/docs/elementary_cellular_auotmata_img/rule110_with_one_alive_inital_cell.png" width="600"><br>
-<b>Figure 3.</b> Time-space diagram of Rule 110 with one "alive" cell in an inital row of cells.
+<b>Figure 5.</b> Time-space diagram of Rule 110 with one "alive" cell in an inital row of cells.
 </td>
 
 <td align="center">
 <img src="/docs/elementary_cellular_auotmata_img/rule110_with_random_initial_values.png" width="600"><br>
-<b>Figure 4.</b> Time-space diagram of Rule 110 with random inital row of cells.
+<b>Figure 6.</b> Time-space diagram of Rule 110 with random inital row of cells.
 </td>
 </tr>
 
 <td align="center">
 <img src="/docs/elementary_cellular_auotmata_img/rule150_with_one_alive_inital_cell.png" width="600"><br>
-<b>Figure 3.</b> Time-space diagram of Rule 150 with one "alive" cell in an inital row of cells.
+<b>Figure 7.</b> Time-space diagram of Rule 150 with one "alive" cell in an inital row of cells.
 </td>
 
 <td align="center">
 <img src="/docs/elementary_cellular_auotmata_img/rule150_with_random_inital_values.png " width="600"><br>
-<b>Figure 4.</b> Time-space diagram of Rule 150 with random inital row of cells.
+<b>Figure 8.</b> Time-space diagram of Rule 150 with random inital row of cells.
 </td>
 </table>
 
