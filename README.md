@@ -1,7 +1,6 @@
 # Celluar Automata Research
 
-[!Warning]
-
+> [!Warning]
 > This isn't a professional research project. I was just curious about using CA for password hashing and led me to code my version from my understadning on the topic through notes and reading about the topic manner. This shouldn't be used as a source for organization or post-secondary research purposes.
 
 Can celluar automata produce cryptographic like properties similar to hash functions? That is the main question
