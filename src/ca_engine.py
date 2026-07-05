@@ -14,7 +14,7 @@ CaHashEngine: a global manager of a collection of Cells that uses elementary
 import random
 
 # Custom Imports
-from elem_rule_set import *
+from .elem_rule_set import *
 
 CELL_ALIVE = 1
 CELL_DEAD = 0

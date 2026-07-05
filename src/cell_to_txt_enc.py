@@ -7,7 +7,7 @@ Exported Functions
 cell_to_bin : Converts an array of Cell objects into a string of binary values. 
 bin_to_txt : Converts the string of binary to ASCII text. 
 """
-from ca_engine import *
+from .ca_engine import *
 
 def cell_to_bin(cell_matrix: list[list[Cell]]) -> str:
     """
