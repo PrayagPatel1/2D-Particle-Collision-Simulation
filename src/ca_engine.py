@@ -14,23 +14,10 @@ CaHashEngine: a global manager of a collection of Cells that uses elementary
 import random
 
 # Custom Imports
-from .elem_rule_set import *
+from elem_rule_set import *
 
 CELL_ALIVE = 1
 CELL_DEAD = 0
-
-def init_cell_arr_random(array_length: int) -> list[Cell]:
-    cell_array = [Cell() for _ in range(array_length)]
-    return cell_array
-
-def init_cell_array_one_alive(array_length: int) -> list[Cell]:
-        cell_array = []
-        for idx in range(array_length):
-            if idx == ((array_length - 1) // 2):
-                cell_array.append(Cell(CELL_ALIVE))
-            cell_array.append(Cell(CELL_DEAD))
-        return cell_array
-    
 
 class Cell:
     """
@@ -134,4 +121,16 @@ class CaHashEngine:
         """Returns the cell matrix."""
         return self._cell_matrix
 
-    
+# Different Ways to Initialize the first generation of cells
+
+def init_cell_arr_random(array_length: int) -> list[Cell]:
+    cell_array = [Cell() for _ in range(array_length)]
+    return cell_array
+
+def init_cell_array_one_alive(array_length: int) -> list[Cell]:
+        cell_array = []
+        for idx in range(array_length):
+            if idx == ((array_length - 1) // 2):
+                cell_array.append(Cell(CELL_ALIVE))
+            cell_array.append(Cell(CELL_DEAD))
+        return cell_array

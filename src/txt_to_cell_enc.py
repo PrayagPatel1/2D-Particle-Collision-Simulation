@@ -12,7 +12,7 @@ bin_to_cell : Converts a string representing binary information into an
                       information.
 """
 
-from .ca_engine import *
+from ca_engine import *
 
 def txt_to_bin(passwrd: str) -> str:
     """Returns a string that represents the binary equivalent of <passwrd>."""
