@@ -12,6 +12,8 @@ CaVisualizer : a system to manage cellular automata visuals through the terminal
 
 from .ca_engine import *
 
+from matplotlib.pyplot import plot as plt
+
 class CaVisualizer:
     """
     A manager that manages how elementary cellular automata is visualized to the
