@@ -92,14 +92,14 @@ class CaHashEngine:
         new_state = 0
         for cell_idx in range(self.array_length):
             if cell_idx == 0: 
-                new_state = self.rule_set.rule_tble[(CELL_DEAD, 
+                new_state = self.rule_set.rule_tble[(old_arr[len(old_arr) - 1].get_state(), 
                                        old_arr[cell_idx].get_state(), 
                                        old_arr[cell_idx + 1].get_state())]
                 new_arr.append(Cell(new_state))
             elif cell_idx == self.array_length - 1:
                 new_state = self.rule_set.rule_tble[(old_arr[cell_idx - 1].get_state(), 
                                        old_arr[cell_idx].get_state(), 
-                                       CELL_DEAD)]
+                                       old_arr[0].get_state())]
                 
                 new_arr.append(Cell(new_state))
             else:
