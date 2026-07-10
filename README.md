@@ -1,12 +1,11 @@
-# Celluar Automata Research
+# Celluar Automata as Hash Function
 
 > [!Warning]
 > This way of hashing a password isn't safe at all and requires extensive
 > cryptanalysis done to make sure its safe.
 
 Can celluar automata produce cryptographic like properties similar to hash
-functions? That is the main question this repository will try to answer and
-compare against the SHA-256 algorithm.
+functions? That is the main question this repository will try to answer showcase some statistics of this engine without any optimizations done (may change in the future).
 
 This project uses Python 3.14.4 as the primary programing language and uses
 matplotlib for statistical output and visualizing the image created using
@@ -20,29 +19,142 @@ different rule sets. Also uses hashlib module to make the comparison.
 4. Basic encoder to encode ASCII to initial cellular automata engine state.
 5. Basic decoder to decode final cellular automata state to ASCII.
 6. A simple cellular automata visualizer for the terminal and matplotlib.
+7. Statistic functions that measure the performance of the cellular automata
+   based hash engine.
 
-# Features To Be Implemented
+# Cellular Automaton Hash Engine Performance
 
-1. Basic digest generator that adheres to the following properties:
-   - One Way: cannot reverse-engineer to determine the original password.
-   - Deterministic: running the exact password through the same formula will
-     always produce the same digest.
-   - Fixed Length: no matter how long or short a password is, it always creates
-     a digest of the same size.
-   - Avalanche Effect: making small changes in the password results in darastic
-     changes in the digest.
-   - Collision Resistant: makes it nearly impossible for two different passwords
-     to output the same digest.
-   - Salted: adds random characters at the end of the password before it goes
-     through the generator.
+## Initial Setup
 
-2. A method in CaHashEngine that uses different rule sets for each generation
-   based on a condition that an algorithm decides instead of having only one rule
-   set applied over and over again.
+The initial setup used through the meausre of how well a cellular based hash
+engine worked was to generate 10,000 random printable ASCII character passwords, use Rule 30 for its pseudorandom behaviour, and have varying generations that the input passwords will have to go through (from 8 to 256).
 
-3. A statistics visualizer to see how the password is changing through each
-   generation and determine some measure to see how much the original password has
-   been scrambled by the end.
+The type of statistics that were collected is histogram plots of the ASCII character frequency from generation 8 to generation 256, heatmaps that showed how frequency certain byte pair occurs within the hash passwords, and the chi-square goodness of fit distribution.
+
+## ASCII Character Frequency
+
+Having collected the frequency of every ASCII character from ordinal values of
+0 to 256 and used a histogram to plot out the frequency at every generations we have the following below,
+
+<table>
+  <!-- Row 1 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_8.png" alt="First Image Description" width="100%">
+        <figcaption><b>Figure 1:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 8 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_16.png" alt="Second Image Description" width="100%">
+        <figcaption><b>Figure 2:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 16 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+
+  <!-- Row 2 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_32.png" alt="Third Image Description" width="100%">
+        <figcaption><b>Figure 3:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 32 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_64.png" alt="Fourth Image Description" width="100%">
+        <figcaption><b>Figure 4:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 64 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+  
+  <!-- Row 3 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_128.png" alt="Fifth Image Description" width="100%">
+        <figcaption><b>Figure 5:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 128 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/ASCII Character Frequency Plots/rule_30_gen_256.png" alt="Sixth Image Description" width="100%">
+        <figcaption><b>Figure 6:</b> ASCII character frequency count of 10,000 hashed passwords, using Rule 30, for 256 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
+
+From the six figures above, we can see that the count are slowly approaching an
+equalibrium state where almost all characters are occuring at the same count. This indicates that for a long enough time as you increase the generation, the
+count of the characters will occur 50% of the time. This indicates that the hash engine allocates all bins evenly when generating a hash.
+
+## Byte Pair Heatmap
+
+To get another perspective of the ASCII character frequency, the byte pair heatmap allows to count the number of times that a byte pair occurs within every hashed password. Since each password is 8 characters long, which is equivalent to 8 bytes on most systems, there will be 7 byte pairs that needs to be considered for every hash password. Running 10,000 input passwords, to get 10,000 hash passwords, a total of 70,000 byte pairs will need to be accounted for. The dimensions of the heatmap is 256 bytes by 256 bytes to account for all ASCII character values (in decimal form).
+
+Below are the siz heatmaps collected for all six generation variations,
+
+<table>
+  <!-- Row 1 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_8.png" alt="First Image Description" width="100%">
+        <figcaption><b>Figure 1:</b> Byte pair heatmap for 10,000 hashed passwords for 8 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_16.png" alt="Second Image Description" width="100%">
+        <figcaption><b>Figure 2:</b> Byte pair heatmap for 10,000 hashed passwords for 16 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+
+  <!-- Row 2 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_32.png" alt="Third Image Description" width="100%">
+        <figcaption><b>Figure 3:</b> Byte pair heatmap for 10,000 hashed passwords for 32 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_64.png" width="100%">
+        <figcaption><b>Figure 4:</b> Byte pair heatmap for 10,000 hashed passwords for 64 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+  
+  <!-- Row 3 -->
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_128.png" alt="Fifth Image Description" width="100%">
+        <figcaption><b>Figure 5:</b> Byte pair heatmap for 10,000 hashed passwords for 128 generations.</figcaption>
+      </figure>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <figure>
+        <img src="./images/Byte-Pair Heatmap Plot/rule_30_gen_256.png" alt="Sixth Image Description" width="100%">
+        <figcaption><b>Figure 6:</b> Byte pair heatmap for 10,000 hashed passwords for 256 generations.</figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
+
+The data here suggests that even on the 8th generation, Rule 30 acheives the avalanche / uniformity properties you would want from a hash-design perspective. The generation count can then be reduced a substantial amount to get a uniform hash behaviour.
+
+## Chi-Square Goodness of Fit Distribution
+
+The chi-square statistic here gives a more qunatifiable backing to the heatmap statistics which by eye can be seen to be more or less uniform. Below is the distribution and the shaded orange area represents the p-value:
+
+![Chi-Square Distribution](./images/Chi-Square%20Distribution%20Plot/chi_square_dstribution_for_10,000_pwds.png)
+
+As one can see that the shaded reegion starts roughly around $\chi^s = 261$ and ends up at the tail of $\chi^2 = 320$. The shaded region sits near the mean of this distribution and covers roughly 35% to 40% meaning that it fails to reject the null hypothesis that the hash byte values are uniformly distributed.
 
 # Build / Installation Instructions
 
@@ -93,8 +205,8 @@ python main.py
 
 # Use of AI
 
-AI will be used to timeline this entire project, but the coding and architecture design of the project will be
-done not using any AI tools / chatbot / agent / LLM.
+Claude Sonnet 5 was used to timeline this project and used to implement the
+CaHashEngine Unit tests.
 
 # References
 
